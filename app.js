@@ -18,11 +18,12 @@ app.use(morgan('dev'));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-//set up static server
-app.use(express.static('public'));
-
 //routes
 app.use('/', routes);
+
+//set up static server
+//beware of where we put this because index.html is also in 'public' - will look for matching names if this line is put before the routes
+app.use(express.static('public'));
 
 //sync database then server is listening
 models.db.sync().then(function(){
